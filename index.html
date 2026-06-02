@@ -1130,14 +1130,16 @@ function submitToNetlify(email, data, scores){
 function notifyKim(data, scores){
   if(EMAILJS_PUBLIC_KEY === 'DEIN_EMAILJS_PUBLIC_KEY') return;
   var fScores = scores.F || {};
+  var fTotal = Object.values(fScores).reduce(function(a,b){ return a+b; }, 0) || 1;
+  function pct(val){ return Math.round(((val||0)/fTotal)*100) + '%'; }
   var scoreText =
-    'Firma: '    + (fScores.Firma     || 0) + ' | ' +
-    'Freude: '   + (fScores.Freude    || 0) + ' | ' +
-    'Familie: '  + (fScores.Familie   || 0) + ' | ' +
-    'Freunde: '  + (fScores.Freunde   || 0) + ' | ' +
-    'Fitness: '  + (fScores.Fitness   || 0) + ' | ' +
-    'Finanzen: ' + (fScores.Finanzen  || 0) + ' | ' +
-    'Fundament: '+ (fScores.Fundament || 0);
+    'Firma: '    + (fScores.Firma     || 0) + ' (' + pct(fScores.Firma)     + ') | ' +
+    'Freude: '   + (fScores.Freude    || 0) + ' (' + pct(fScores.Freude)    + ') | ' +
+    'Familie: '  + (fScores.Familie   || 0) + ' (' + pct(fScores.Familie)   + ') | ' +
+    'Freunde: '  + (fScores.Freunde   || 0) + ' (' + pct(fScores.Freunde)   + ') | ' +
+    'Fitness: '  + (fScores.Fitness   || 0) + ' (' + pct(fScores.Fitness)   + ') | ' +
+    'Finanzen: ' + (fScores.Finanzen  || 0) + ' (' + pct(fScores.Finanzen)  + ') | ' +
+    'Fundament: '+ (fScores.Fundament || 0) + ' (' + pct(fScores.Fundament) + ')';
 
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_NOTIFY_TEMPLATE_ID, {
     uid:        currentUID,
