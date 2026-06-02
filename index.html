@@ -256,6 +256,18 @@ body{font-family:'Montserrat',sans-serif;background:var(--white);color:var(--dar
     body { background:white; }
     .result-hero { background:#1F2937 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   }
+
+  /* ── NEUE ERGEBNISSEITE ─────────────────────────── */
+  .detail-section { margin-bottom: 4px; }
+  .detail-eyebrow { font-size:10px; font-weight:700; letter-spacing:.12em; color:var(--mid); text-transform:uppercase; margin-bottom:6px; }
+  .detail-title { font-size:20px; font-weight:700; color:var(--dark); margin-bottom:14px; letter-spacing:-.01em; }
+  .detail-text p { font-size:14px; line-height:1.8; color:var(--dark); margin-bottom:12px; }
+  .detail-text p:last-child { margin-bottom:0; }
+  #tie-choices .option { border:1.5px solid var(--border); border-radius:8px; padding:14px 16px; cursor:pointer; transition:all .15s; background:var(--white); display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+  #tie-choices .option:hover { border-color:var(--gold); background:var(--gold-bg); }
+  #tie-choices .option.selected { border-color:var(--gold); background:var(--gold-bg); }
+  #tie-choices .option.selected .option-dot { border-color:var(--gold-dark); background:var(--gold); }
+  @media(max-width:600px){ .detail-title{font-size:17px;} .detail-text p{font-size:13px;} }
 </style>
 </head>
 <body>
@@ -385,59 +397,22 @@ body{font-family:'Montserrat',sans-serif;background:var(--white);color:var(--dar
   </div>
 
   <div class="uid-box" id="uid-box">
-  <div>
-    <div class="uid-label">Deine Unique ID</div>
-    <div class="uid-value" id="uid-display">----</div>
-  </div>
-  <button class="uid-copy" onclick="copyUID()">Kopieren</button>
-</div>
-
-<div class="success-box" id="success-box">
-  <div class="success-title">Mail ist unterwegs.</div>
-  <div class="success-text" id="success-text"></div>
-</div>
-
-<div class="eteam-result-badge" id="eteam-badge">
-    <div class="eteam-result-icon" id="eteam-icon"></div>
-    <div class="eteam-result-body">
-      <div class="eteam-result-label" id="eteam-label">Dein E-Team-Typ</div>
-      <div class="eteam-result-name" id="eteam-name"></div>
-      <div class="eteam-result-sub" id="eteam-sub"></div>
+    <div>
+      <div class="uid-label">Deine Unique ID</div>
+      <div class="uid-value" id="uid-display">----</div>
     </div>
+    <button class="uid-copy" onclick="copyUID()">Kopieren</button>
   </div>
 
-  <div class="bars-section">
-    <div class="bars-label">Dein 7F-Energieprofil</div>
-    <div class="bars" id="bars"></div>
+  <div class="success-box" id="success-box">
+    <div class="success-title">Mail ist unterwegs.</div>
+    <div class="success-text" id="success-text"></div>
   </div>
 
-  <div class="sdt-section">
-    <div class="sdt-label">Deine stärkste Dimension (SDT)</div>
-    <div class="sdt-pills" id="sdt-pills"></div>
-  </div>
+  <!-- DYNAMISCHER INHALT -->
+  <div id="result-content"></div>
 
-  <div class="insight-box">
-    <div class="insight-label">Dein kombiniertes Profil</div>
-    <div class="insight-headline" id="r-headline"></div>
-    <div class="insight-text" id="r-text"></div>
-  </div>
-
-  <div class="nextstep-box">
-    <div class="nextstep-label">Der logische nächste Schritt</div>
-    <div class="nextstep-text" id="r-nextstep"></div>
-  </div>
-
-  <div class="cta-section">
-    <button class="btn-primary" onclick="window.open('https://tidycal.com/tckimkoerber/terra-clarity-call','_blank')">
-      TERRA Clarity Call buchen · 45 Min · 150 € →
-    </button>
-    <button class="btn-secondary" onclick="window.open('https://newsletter.kimkoerber.com','_blank')">
-      Newsletter abonnieren &nbsp;→
-    </button>
-  </div>
-  <div class="cta-note">45 Minuten. 150 Euro. Kein Funnel. Kein Verkaufsdruck.<br>Du buchst direkt einen Termin mit Kim.</div>
-  <div class="divider"></div>
-  <button class="btn-secondary" onclick="restartQuiz()" style="width:100%">Check neu starten</button>
+</div>
 </div>
 
 </div>
@@ -868,22 +843,55 @@ function getWinner(obj){
   return Object.entries(obj).sort(function(a,b){return b[1]-a[1];})[0][0];
 }
 
+// ── TEXTE: E-TEAM-TYP ────────────────────────────
+var ETEAM_DESCRIPTIONS = {
+  empath: "Du liest Räume, bevor du ein Wort gehört hast. Das ist keine Fähigkeit, die du dir antrainiert hast. Es ist deine Grundausstattung. Du weißt, wenn jemand nicht okay ist, auch wenn er behauptet, alles sei in Ordnung.\n\nDas kostet dich etwas. Mehr als andere ahnen. Weil du nicht einfach abschalten kannst. Weil du immer gleichzeitig auf mehreren Ebenen unterwegs bist: die eigene Aufgabe, die Stimmung im Team, das Unausgesprochene zwischen zwei Personen.\n\nAuf andere wirkst du wie ein Anker. Ruhig, verlässlich, verständnisvoll. Menschen öffnen sich dir schnell, manchmal zu schnell, weil sie spüren, dass du wirklich zuhörst. Das ist ein Geschenk. Und manchmal eine Bürde.\n\nDein blinder Fleck: Du kennst die Bedürfnisse aller, außer manchmal deinen eigenen. Du priorisierst den Frieden über deine eigene Klarheit. Die Frage, die dich weiterbringt: Was würdest du entscheiden, wenn niemand anderes davon betroffen wäre?",
+  experte: "Du denkst tiefer als die meisten. Nicht als Pose, sondern weil Oberflächlichkeit dich körperlich stört. Wenn jemand eine halbgare Lösung vorschlägt, siehst du sofort, wo sie bricht.\n\nDu investierst in dein Wissen, weil es dir Kontrolle gibt. Kontrolle über Situationen, über Qualität, über Ergebnisse. Wenn du etwas wirklich verstehst, kannst du es auch wirklich beeinflussen. Das ist keine Arroganz. Das ist dein Betriebssystem.\n\nAuf andere wirkst du wie ein Kompass. Wenn etwas unklar ist, wird nach dir gefragt. Menschen verlassen sich auf deine Einschätzung. Das gibt dir Bedeutung. Und manchmal auch Druck.\n\nDein blinder Fleck: Du verwechselst manchmal Wissen mit Entscheidung. Du analysierst weiter, wenn es Zeit wäre zu handeln. Die Frage, die dich weiterbringt: Was würdest du tun, wenn du keine Garantie hättest, dass es richtig ist?",
+  enthusiast: "Du bringst etwas mit, das sich nicht simulieren lässt: echte Begeisterung. Wenn du für eine Idee brennst, verändert sich der Raum. Menschen, die vorher zögerten, fangen an zu glauben.\n\nDu denkst in Möglichkeiten, nicht in Grenzen. Wo andere ein Problem sehen, siehst du einen Weg. Das macht dich wertvoll in Momenten, wo andere stagnieren. Du ziehst an, du inspirierst, du zündest.\n\nAuf andere wirkst du wie ein Katalysator. Deine Präsenz verändert, was möglich scheint. Menschen kommen in deiner Nähe auf Ideen, die sie alleine nicht gehabt hätten.\n\nDein blinder Fleck: Die Energie, die du erzeugst, braucht Boden. Du fängst manches an, was andere zu Ende bringen müssen. Die Frage, die dich weiterbringt: Was willst du noch wollen, wenn die Aufregung weg ist?",
+  ernahrer: "Du bist derjenige, der dafür sorgt, dass alles steht. Nicht weil dich jemand darum gebeten hat, sondern weil du es nicht aushältst, wenn etwas wackelt. Du siehst Lücken früh. Du schließt sie, bevor andere sie bemerken.\n\nDein Antrieb ist Stabilität. Für dich, für dein Team, für deine Familie. Das ist kein Mangel an Visionen. Es ist eine tiefe Form von Verantwortung.\n\nAuf andere wirkst du wie ein Fundament. Man weiß, dass du da bist. Man baut auf dich. Manchmal mehr als du weißt, und manchmal mehr als gesund ist. Deine Verlässlichkeit wird oft als selbstverständlich genommen.\n\nDein blinder Fleck: Du gibst Sicherheit nach außen, bevor du sie für dich selbst hast. Du trägst, bis es zu viel wird. Die Frage, die dich weiterbringt: Was würdest du aufbauen, wenn du nur für dich bauen müsstest?"
+};
+
+// ── TEXTE: FOKUS-F ───────────────────────────────
+var FOKUS_DESCRIPTIONS = {
+  Firma: "Firma ist nicht nur dein Job. Es ist der Ort, an dem du einen großen Teil deiner wachen Zeit verbringst, Entscheidungen trägst und dich selbst als fähig oder unfähig erlebst. Wenn dieser Bereich nicht stimmt, strahlt das aus.\n\nDass Firma gerade dein Fokus-F ist, heißt nicht, dass dein Unternehmen schlecht läuft. Es heißt, dass etwas dort deine Aufmerksamkeit bindet. Vielleicht eine Spannung, die du noch nicht benennen konntest.\n\nDie meisten Geschäftsführer, die hier landen, beschreiben dasselbe: Das Unternehmen läuft. Aber sie selbst laufen nicht mehr richtig mit. Die Frage ist nicht, ob dein Unternehmen erfolgreich ist. Die Frage ist, ob du dich darin noch erkennst.",
+  Freude: "Freude ist das am schwersten zu rechtfertigende Bedürfnis. Gerade für Menschen, die Verantwortung tragen. Du weißt, dass du funktionierst. Du weißt auch, dass du das schon länger ohne echten Antrieb tust.\n\nFreude ist kein Luxus. Sie ist ein Signal. Wenn sie fehlt, arbeitet dein System auf Reserve.\n\nDass Freude dein Fokus-F ist, heißt: Irgendwo zwischen dem, was du tust, und dem, was dich wirklich antreibt, ist eine Lücke entstanden. Diese Lücke hat keinen Notfall-Charakter. Sie ist leise. Und genau deshalb wird sie so lange ignoriert, bis sie laut wird.",
+  Familie: "Familie ist für die meisten Menschen der Bereich, der zuerst kommt, wenn man fragt, was wirklich zählt. Und gleichzeitig der Bereich, der im Alltag am häufigsten hinten ansteht.\n\nDass Familie dein Fokus-F ist, heißt nicht, dass du ein schlechter Vater, Partner oder Sohn bist. Es heißt, dass du spürst: Hier stimmt gerade etwas nicht.\n\nFamilie als Fokus bedeutet: Dieser Bereich will gesehen werden. Nicht mit schlechtem Gewissen. Sondern mit Entscheidung.",
+  Freunde: "Freundschaften sind das erste, was wegfällt, wenn das Leben voller wird. Kein Drama, kein Bruch. Einfach immer weniger Zeit, immer weniger Energie, immer weniger Kontakt.\n\nDass Freunde dein Fokus-F sind, heißt: Du vermisst etwas. Verbindung außerhalb von Verantwortung. Menschen, bei denen du einfach du sein kannst.\n\nDieser Bereich wird selten als dringend empfunden. Genau deshalb schrumpft er so unbemerkt. Und genau deshalb lohnt es sich, ihn jetzt anzuschauen.",
+  Fitness: "Dein Körper redet mit dir. Schon länger. Vielleicht nicht durch Schmerzen, vielleicht durch Müdigkeit, durch fehlenden Antrieb, durch das Gefühl, nicht mehr richtig auf Betriebstemperatur zu kommen.\n\nFitness als Fokus-F heißt nicht, dass du abnehmen oder einen Marathon laufen sollst. Es heißt, dass Körper und Geist gerade nicht im Einklang sind.\n\nDie Forschung ist eindeutig: Körperliche Aktivität ist der stärkste Hebel für mentale Energie, Belastbarkeit und Fokus. Du weißt das wahrscheinlich. Die Frage ist nicht das Wissen. Die Frage ist, warum du es trotzdem nicht tust.",
+  Finanzen: "Geld ist das Thema, über das die wenigsten offen reden. Auch wenn es fast jeden beschäftigt. Für Unternehmer kommt noch eine Schicht dazu: Dein persönliches Finanzbild und das deines Unternehmens sind oft schwer zu trennen.\n\nDass Finanzen dein Fokus-F sind, heißt nicht zwingend, dass zu wenig da ist. Es kann auch heißen: Du weißt nicht genau, was da ist. Oder du willst nicht hinschauen.\n\nFinanzielle Klarheit ist kein Buchhaltungsthema. Sie ist ein Freiheitsthema. Solange dieser Bereich unklar ist, kostet er dich Energie, auch wenn du gerade nicht aktiv darüber nachdenkst.",
+  Fundament: "Fundament ist das, was bleibt, wenn man alles andere wegnimmt. Deine Werte. Dein Warum. Das Gefühl, dass das, was du tust, zu dem passt, wer du bist.\n\nDass Fundament dein Fokus-F ist, ist kein Zeichen von Krise. Es ist ein Zeichen von Tiefe. Du stehst an einem Punkt, wo die äußeren Dinge nicht mehr ausreichen, um dich zu tragen.\n\nDieser Bereich ist der schwierigste. Weil er keine schnelle Lösung kennt. Weil niemand dir sagen kann, was dein Fundament ist. Aber wer hier anfängt zu graben, findet meistens das, was ihm schon länger gefehlt hat."
+};
+
+// ── TEXTE: SDT-DIMENSIONEN ───────────────────────
+var SDT_DESCRIPTIONS = {
+  auto: "Autonomie ist das Bedürfnis, das am seltensten laut wird, aber am lautesten stört, wenn es fehlt. Es geht nicht darum, niemandem Rechenschaft zu schulden. Es geht darum, dass das, was du tust, sich nach dir anfühlt.\n\nAuf andere wirkst du unabhängiger als du dich fühlst. Du kommunizierst Selbstsicherheit. Aber innerlich gibt es Bereiche, in denen du funktionierst statt wählst.\n\nAutonomie zu stärken heißt nicht, alles aufzukündigen. Es heißt, wieder spüren zu lernen: Was will ich hier eigentlich? Und dann so zu handeln. In kleinen Schritten. In einem Bereich zuerst.",
+  zug: "Zugehörigkeit ist kein weiches Thema. Es ist ein biologisches Grundbedürfnis. Menschen, die sich wirklich zugehörig fühlen, sind belastbarer, kreativer und leistungsfähiger.\n\nDass Zugehörigkeit deine stärkste Dimension ist, heißt: Du bist umgeben von Menschen, aber du fühlst dich nicht immer wirklich gesehen. Oder echte Verbindung kostet gerade mehr Energie, als du hast.\n\nZugehörigkeit entsteht nicht durch mehr Zeit mit anderen. Sie entsteht durch echte Momente. Durch das Gefühl: Dieser Mensch sieht mich. Nicht nur was ich leiste.",
+  wirk: "Wirksamkeit ist das Bedürfnis zu spüren, dass das, was du tust, etwas verändert. Nicht im Großen, nicht im Abstrakten. Sondern konkret: Mein Handeln hat Konsequenz.\n\nDass Wirksamkeit deine stärkste Dimension ist, heißt oft: Du tust viel. Aber du spürst nicht, dass es ankommt. Die Arbeit verschwindet in Prozessen. Das Feedback bleibt aus.\n\nWirksamkeit ist kein Ego-Bedürfnis. Es ist das, was Arbeit von Fließbandarbeit unterscheidet. Wenn du spürst, dass du eine Rolle spielst, die jeder andere auch spielen könnte, verlierst du Motivation. Nicht weil du schwach bist. Sondern weil dein Gehirn Sinn braucht, um Energie freizugeben."
+};
+
+var SDT_LABELS = { auto: "Autonomie", zug: "Zugehörigkeit", wirk: "Wirksamkeit" };
+
 // ── RESULT ────────────────────────────────────────
 function showResult(){
   var scores=computeScores();
-  var winF=getWinner(scores.F);
+
+  // Gleichstand-Erkennung für Fokus-F
+  var fSorted = Object.entries(scores.F).sort(function(a,b){return b[1]-a[1];});
+  var topFScore = fSorted[0][1];
+  var tieFs = fSorted.filter(function(e){return e[1]===topFScore;}).map(function(e){return e[0];});
+  var winF = tieFs[0];
+
   var winE=getWinner(scores.E);
   var winS=getWinner(scores.S);
   var profileKey=winF+'-'+winE;
   var profile=profiles[profileKey]||{headline:'Dein Profil: '+winE+' mit Fokus '+winF,text:'Ein klares Muster zeigt sich.',nextstep:'Besprich dein Ergebnis in einem TERRA Clarity Call.'};
   var edef=eteamDefs[winE];
 
-  // Generate UID
   currentUID = generateUID();
 
-  // Build result data object for email + render
   resultDataGlobal = {
     winF:winF, winE:winE, winS:winS,
+    tieFs: tieFs.length > 1 ? tieFs : null,
     eteamName:edef.name, eteamSub:edef.sub, eteamIcon:edef.icon,
     eteamColor:edef.color, eteamBg:edef.bg, eteamBorder:edef.border,
     eteamKern:edef.kern,
@@ -893,86 +901,173 @@ function showResult(){
     scores:scores
   };
 
-  // Benachrichtigung an Kim (immer, ohne personenbezogene Daten)
   notifyKim(resultDataGlobal, scores);
-
-  // Submit to Netlify Forms (anonym)
   submitToNetlify('', resultDataGlobal, scores);
-
-  // Show email gate first
   showEmailGate(resultDataGlobal);
+}
+
+function formatDetailText(text){
+  return text.split('\n\n').map(function(p){
+    return '<p>'+p.replace(/\n/g,'<br>')+'</p>';
+  }).join('');
 }
 
 function renderResult(data){
   document.getElementById('email-gate').style.display='none';
   var r=document.getElementById('result');
-  r.style.display='flex';r.style.flexDirection='column';
+  r.style.display='flex'; r.style.flexDirection='column';
 
   var winF=data.winF; var winE=data.winE; var winS=data.winS;
   var edef=eteamDefs[winE];
   var profile=profiles[winF+'-'+winE]||{headline:'Profil: '+edef.name+' mit Fokus '+winF,text:'',nextstep:''};
   var scores=data.scores;
 
-  // UID
   document.getElementById('uid-display').textContent=currentUID;
-
   document.getElementById('r-title').textContent=edef.name+' · Fokus '+winF;
-  document.getElementById('r-sub').textContent='Dein E-Team-Typ und dein stärkstes Wachstumsfeld auf einen Blick.';
+  document.getElementById('r-sub').textContent='Unique ID: '+currentUID;
 
-  // E-Team Badge
-  var badge=document.getElementById('eteam-badge');
-  badge.style.background=edef.bg;badge.style.borderColor=edef.border;
-  document.getElementById('eteam-icon').textContent=edef.icon;
-  document.getElementById('eteam-icon').style.background=edef.bg;
-  document.getElementById('eteam-label').style.color=edef.color;
-  document.getElementById('eteam-name').textContent=edef.name;
-  document.getElementById('eteam-name').style.color=edef.color;
-  document.getElementById('eteam-sub').textContent=edef.sub;
-  document.getElementById('eteam-sub').style.color=edef.color;
-
-  // 7F Bars
+  // ── BARS (für result-content)
   var ftotal=Object.values(scores.F).reduce(function(a,b){return a+b;},0)||1;
-  var barsEl=document.getElementById('bars');
-  barsEl.innerHTML='';
+  var barsHTML='';
   Object.entries(scores.F).sort(function(a,b){return b[1]-a[1];}).forEach(function(entry){
     var f=entry[0],v=entry[1];
     var pct=Math.round((v/ftotal)*100);
     var isWin=f===winF;
-    var row=document.createElement('div');
-    row.className='bar-row'+(isWin?' bar-winner':'');
-    row.innerHTML='<div class="bar-label">'+(isWin?'<span class="winner-dot"></span>':'')+f+'</div>'
+    barsHTML+='<div class="bar-row'+(isWin?' bar-winner':'')+'">'
+      +'<div class="bar-label">'+(isWin?'<span class="winner-dot"></span>':'')+f+'</div>'
       +'<div class="bar-track"><div class="bar-fill" style="background:'+(fColors[f]||'#888')+'" data-pct="'+pct+'"></div></div>'
-      +'<div class="bar-pct">'+pct+' %</div>';
-    barsEl.appendChild(row);
+      +'<div class="bar-pct">'+pct+' %</div></div>';
   });
-  setTimeout(function(){
-    document.querySelectorAll('.bar-fill').forEach(function(el){el.style.width=el.dataset.pct+'%';});
-  },120);
 
-  // SDT pills
+  // ── SDT PILLS
   var stotal=Object.values(scores.S).reduce(function(a,b){return a+b;},0)||1;
-  var pillsEl=document.getElementById('sdt-pills');
-  pillsEl.innerHTML='';
+  var pillsHTML='';
   Object.entries(scores.S).sort(function(a,b){return b[1]-a[1];}).forEach(function(entry,i){
     var k=entry[0],v=entry[1];
     var pct=Math.round((v/stotal)*100);
-    var pill=document.createElement('div');
-    pill.className='sdt-pill'+(i===0?' dominant':'');
-    pill.innerHTML='<div class="sdt-pill-name">'+sdtLabels[k]+'</div>'
+    pillsHTML+='<div class="sdt-pill'+(i===0?' dominant':'')+'">'
+      +'<div class="sdt-pill-name">'+sdtLabels[k]+'</div>'
       +'<div class="sdt-pill-bar"><div class="sdt-pill-fill" data-pct="'+pct+'"></div></div>'
-      +'<div class="sdt-pill-pct">'+pct+' %</div>';
-    pillsEl.appendChild(pill);
+      +'<div class="sdt-pill-pct">'+pct+' %</div></div>';
   });
+
+  // ── FOKUS-F SEKTION (mit Gleichstand-Logik)
+  var fokusHTML='';
+  if(data.tieFs && data.tieFs.length > 1){
+    fokusHTML='<div class="detail-eyebrow">Dein Fokus-F</div>'
+      +'<div class="detail-title" style="margin-bottom:8px;">Gleichstand erkannt</div>'
+      +'<p style="font-size:13px;color:var(--mid);line-height:1.7;margin-bottom:16px;">Beide Bereiche haben bei dir dieselbe Energie. Welcher beschäftigt dich gerade mehr?</p>'
+      +'<div id="tie-choices">'
+      +data.tieFs.map(function(f){
+        return '<button class="option" onclick="resolveTie(\''+f+'\', this)">'
+          +'<div class="option-dot"></div>'
+          +'<div class="option-text" style="font-weight:600;">'+f+'</div>'
+          +'</button>';
+      }).join('')
+      +'</div>'
+      +'<div id="fokus-detail" style="margin-top:20px;display:none;"></div>';
+  } else {
+    fokusHTML='<div class="detail-eyebrow">Dein Fokus-F</div>'
+      +'<div class="detail-title">'+winF+'</div>'
+      +'<div class="detail-text">'+formatDetailText(FOKUS_DESCRIPTIONS[winF]||'')+'</div>';
+  }
+
+  // ── SDT DETAIL
+  var sdtLabel = SDT_LABELS[winS] || winS;
+  var sdtDetailHTML='<div class="detail-eyebrow">Deine SDT-Dimension</div>'
+    +'<div class="detail-title">'+sdtLabel+'</div>'
+    +'<div class="detail-text">'+formatDetailText(SDT_DESCRIPTIONS[winS]||'')+'</div>';
+
+  // ── ALLES ZUSAMMENBAUEN
+  document.getElementById('result-content').innerHTML=''
+
+    // 1. Kombiniertes Profil (TL:DR)
+    +'<div class="insight-box" style="margin-bottom:16px;">'
+    +'<div class="insight-label">Dein kombiniertes Profil</div>'
+    +'<div class="insight-headline">'+profile.headline+'</div>'
+    +'<div class="insight-text">'+profile.text+'</div>'
+    +'</div>'
+
+    // 2. Next Step
+    +'<div class="nextstep-box">'
+    +'<div class="nextstep-label">Der logische nächste Schritt</div>'
+    +'<div class="nextstep-text">'+profile.nextstep+'</div>'
+    +'</div>'
+
+    // 3. 7F Bars
+    +'<div class="bars-section">'
+    +'<div class="bars-label">Dein 7F-Energieprofil</div>'
+    +'<div class="bars" id="bars">'+barsHTML+'</div>'
+    +'</div>'
+
+    // 4. SDT Pills
+    +'<div class="sdt-section">'
+    +'<div class="sdt-label">Deine stärkste Dimension (SDT)</div>'
+    +'<div class="sdt-pills" id="sdt-pills">'+pillsHTML+'</div>'
+    +'</div>'
+
+    +'<div class="divider"></div>'
+
+    // 5. E-Team-Typ Detail
+    +'<div class="detail-section">'
+    +'<div class="detail-eyebrow">Dein E-Team-Typ</div>'
+    +'<div class="eteam-result-badge" style="border-color:'+edef.border+';background:'+edef.bg+';margin-bottom:12px;">'
+    +'<div class="eteam-result-icon" style="background:'+edef.bg+'">'+edef.icon+'</div>'
+    +'<div class="eteam-result-body">'
+    +'<div class="eteam-result-label" style="color:'+edef.color+'">E-TEAM-TYP</div>'
+    +'<div class="eteam-result-name" style="color:'+edef.color+'">'+edef.name+'</div>'
+    +'<div class="eteam-result-sub" style="color:'+edef.color+'">'+edef.sub+'</div>'
+    +'</div></div>'
+    +'<div class="detail-text">'+formatDetailText(ETEAM_DESCRIPTIONS[winE]||'')+'</div>'
+    +'</div>'
+
+    +'<div class="divider"></div>'
+
+    // 6. Fokus-F Detail
+    +'<div class="detail-section" id="fokus-section">'+fokusHTML+'</div>'
+
+    +'<div class="divider"></div>'
+
+    // 7. SDT Detail
+    +'<div class="detail-section">'+sdtDetailHTML+'</div>'
+
+    +'<div class="divider"></div>'
+
+    // 8. CTA
+    +'<div class="cta-section">'
+    +'<button class="btn-primary" onclick="window.open(\'https://tidycal.com/tckimkoerber/terra-clarity-call\',\'_blank\')">TERRA Clarity Call buchen · 45 Min · 150 € →</button>'
+    +'<button class="btn-secondary" onclick="window.open(\'https://newsletter.kimkoerber.com\',\'_blank\')">Newsletter abonnieren →</button>'
+    +'</div>'
+    +'<div class="cta-note">45 Minuten. 150 Euro. Kein Funnel. Kein Verkaufsdruck.<br>Du buchst direkt einen Termin mit Kim.</div>'
+    +'<div class="divider"></div>'
+    +'<button class="btn-secondary" onclick="restartQuiz()" style="width:100%">Check neu starten</button>';
+
+  // Bars + Pills animieren
+  setTimeout(function(){
+    document.querySelectorAll('.bar-fill').forEach(function(el){el.style.width=el.dataset.pct+'%';});
+  },120);
   setTimeout(function(){
     document.querySelectorAll('.sdt-pill-fill').forEach(function(el){el.style.width=el.dataset.pct+'%';});
   },200);
 
-  // Insight + Next Step
-  document.getElementById('r-headline').textContent=profile.headline;
-  document.getElementById('r-text').textContent=profile.text+' '+edef.kern;
-  document.getElementById('r-nextstep').textContent=profile.nextstep;
-
   window.scrollTo(0,0);
+}
+
+// ── GLEICHSTAND AUFLÖSEN ─────────────────────────
+function resolveTie(chosen, btn){
+  document.querySelectorAll('#tie-choices .option').forEach(function(b){
+    b.classList.remove('selected');
+    b.style.pointerEvents='none';
+    b.style.opacity='0.5';
+  });
+  btn.classList.add('selected');
+  btn.style.opacity='1';
+  var detail=document.getElementById('fokus-detail');
+  if(detail){
+    detail.style.display='block';
+    detail.innerHTML='<div class="detail-text">'+formatDetailText(FOKUS_DESCRIPTIONS[chosen]||'')+'</div>';
+    detail.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
 }
 
 // ── UNIQUE ID ────────────────────────────────────
@@ -1130,16 +1225,14 @@ function submitToNetlify(email, data, scores){
 function notifyKim(data, scores){
   if(EMAILJS_PUBLIC_KEY === 'DEIN_EMAILJS_PUBLIC_KEY') return;
   var fScores = scores.F || {};
-  var fTotal = Object.values(fScores).reduce(function(a,b){ return a+b; }, 0) || 1;
-  function pct(val){ return Math.round(((val||0)/fTotal)*100) + '%'; }
   var scoreText =
-    'Firma: '    + (fScores.Firma     || 0) + ' (' + pct(fScores.Firma)     + ') | ' +
-    'Freude: '   + (fScores.Freude    || 0) + ' (' + pct(fScores.Freude)    + ') | ' +
-    'Familie: '  + (fScores.Familie   || 0) + ' (' + pct(fScores.Familie)   + ') | ' +
-    'Freunde: '  + (fScores.Freunde   || 0) + ' (' + pct(fScores.Freunde)   + ') | ' +
-    'Fitness: '  + (fScores.Fitness   || 0) + ' (' + pct(fScores.Fitness)   + ') | ' +
-    'Finanzen: ' + (fScores.Finanzen  || 0) + ' (' + pct(fScores.Finanzen)  + ') | ' +
-    'Fundament: '+ (fScores.Fundament || 0) + ' (' + pct(fScores.Fundament) + ')';
+    'Firma: '    + (fScores.Firma     || 0) + ' | ' +
+    'Freude: '   + (fScores.Freude    || 0) + ' | ' +
+    'Familie: '  + (fScores.Familie   || 0) + ' | ' +
+    'Freunde: '  + (fScores.Freunde   || 0) + ' | ' +
+    'Fitness: '  + (fScores.Fitness   || 0) + ' | ' +
+    'Finanzen: ' + (fScores.Finanzen  || 0) + ' | ' +
+    'Fundament: '+ (fScores.Fundament || 0);
 
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_NOTIFY_TEMPLATE_ID, {
     uid:        currentUID,
