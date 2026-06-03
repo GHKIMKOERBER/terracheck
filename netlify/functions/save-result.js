@@ -25,7 +25,17 @@ exports.handler = async function(event) {
 
   // ── IN BLOB STORAGE SPEICHERN ────────────────────
   try {
-    const store = getStore("terra-results");
+    // Store mit expliziten Credentials konfigurieren (robuster als auto-detect)
+    const siteID = process.env.NETLIFY_SITE_ID || process.env.SITE_ID;
+    const token  = process.env.NETLIFY_BLOBS_TOKEN || process.env.NETLIFY_API_TOKEN;
+
+    let store;
+    if (siteID && token) {
+      store = getStore({ name: "terra-results", siteID: siteID, token: token });
+    } else {
+      store = getStore("terra-results");
+    }
+
     await store.set(`${uid}.html`, html, {
       metadata: {
         uid,
@@ -36,9 +46,9 @@ exports.handler = async function(event) {
       }
     });
 
-    // Öffentliche URL zusammenbauen
+    // Öffentliche URL über get-result Function
     const siteUrl = process.env.URL || "https://check.kimkoerber.com";
-    const resultUrl = `${siteUrl}/.netlify/blobs/terra-results/${uid}.html`;
+    const resultUrl = `${siteUrl}/.netlify/functions/get-result?uid=${uid}`;
 
     return {
       statusCode: 200,
