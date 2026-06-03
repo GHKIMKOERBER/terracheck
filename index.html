@@ -979,8 +979,6 @@ function sendResultEmail(email, data, callback){
     return;
   }
 
-  var emailHtml = buildEmailHTML(data);
-
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
     to_email:     email,
     unique_id:    currentUID,
@@ -1008,26 +1006,8 @@ function addToSendFox(email, data){
 }
 
 function buildEmailHTML(data){
-  return '<div style="font-family:Montserrat,Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px;background:#fff;">'
-    + '<div style="background:#1F2937;border-radius:8px;padding:20px;margin-bottom:20px;">'
-    + '<p style="font-size:11px;font-weight:700;color:#F8AB26;letter-spacing:.1em;margin:0 0 8px;">DEIN TERRA-PROFIL</p>'
-    + '<h1 style="font-size:22px;font-weight:700;color:#fff;margin:0 0 6px;">'+data.eteamName+' · Fokus '+data.winF+'</h1>'
-    + '<p style="font-size:13px;color:#9CA3AF;margin:0;">Unique ID: <strong style="color:#F8AB26;">'+currentUID+'</strong></p>'
-    + '</div>'
-    + '<div style="background:#DBEAFE;border:1.5px solid #4F69B0;border-radius:8px;padding:18px;margin-bottom:16px;">'
-    + '<p style="font-size:10px;font-weight:700;color:#1E3A6E;letter-spacing:.1em;margin:0 0 8px;">DEIN KOMBINIERTES PROFIL</p>'
-    + '<p style="font-size:15px;font-weight:700;color:#1F2937;margin:0 0 10px;">'+data.headline+'</p>'
-    + '<p style="font-size:13px;color:#1F2937;line-height:1.7;margin:0;">'+data.profileText+'</p>'
-    + '</div>'
-    + '<div style="background:#FEF3C7;border:1.5px solid #F8AB26;border-radius:8px;padding:16px;margin-bottom:16px;">'
-    + '<p style="font-size:10px;font-weight:700;color:#633806;letter-spacing:.1em;margin:0 0 6px;">DER LOGISCHE NÄCHSTE SCHRITT</p>'
-    + '<p style="font-size:14px;font-weight:500;color:#1F2937;margin:0;">'+data.nextstep+'</p>'
-    + '</div>'
-    + '<div style="text-align:center;margin-top:20px;">'
-    + '<a href="https://tidycal.com/tckimkoerber/terra-clarity-call" style="display:inline-block;background:#4F69B0;color:#fff;font-size:15px;font-weight:700;padding:14px 28px;border-radius:6px;text-decoration:none;">TERRA Clarity Call buchen · 45 Min · 150 €</a>'
-    + '<p style="font-size:11px;color:#6B7280;margin-top:10px;">kimkoerber.com · TERRA Check 3.5</p>'
-    + '</div>'
-    + '</div>';
+  // Nicht mehr genutzt. Die Tester-Mail läuft über das EmailJS-Template mit result_url.
+  return '';
 }
 
 function submitToNetlify(email, data, scores){
@@ -1096,7 +1076,7 @@ function notifyKim(data, scores){
     uid:        currentUID,
     eteam:      data.eteamName,
     fokus_f:    data.winF,
-    sdt:        data.winS,
+    sdt:        TERRA.SDT_LABELS_FULL[data.winS] || data.winS,
     headline:   data.headline,
     scores:     scoreText,
     result_url: data.blobUrl || 'Noch nicht verfügbar',
