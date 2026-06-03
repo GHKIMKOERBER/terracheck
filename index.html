@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TERRA Check 3.0 · kimkoerber.com</title>
+<title>TERRA Check 3.3 · kimkoerber.com</title>
 <script>var emailjs=function(e){"use strict";class t{constructor(){let e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:0,t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"Network Error";this.status=e,this.text=t}}const i={origin:"https://api.emailjs.com",blockHeadless:!1,storageProvider:(()=>{if("undefined"!=typeof localStorage)return{get:e=>Promise.resolve(localStorage.getItem(e)),set:(e,t)=>Promise.resolve(localStorage.setItem(e,t)),remove:e=>Promise.resolve(localStorage.removeItem(e))}})()},r=e=>e?"string"==typeof e?{publicKey:e}:"[object Object]"===e.toString()?e:{}:{},o=function(e){let t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"https://api.emailjs.com";if(!e)return;const o=r(e);i.publicKey=o.publicKey,i.blockHeadless=o.blockHeadless,i.storageProvider=o.storageProvider,i.blockList=o.blockList,i.limitRate=o.limitRate,i.origin=o.origin||t},a=async function(e,r){let o=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{};const a=await fetch(i.origin+e,{method:"POST",headers:o,body:r}),s=await a.text(),n=new t(a.status,s);if(a.ok)return n;throw n},s=(e,t,i)=>{if(!e||"string"!=typeof e)throw"The public key is required. Visit https://dashboard.emailjs.com/admin/account";if(!t||"string"!=typeof t)throw"The service ID is required. Visit https://dashboard.emailjs.com/admin";if(!i||"string"!=typeof i)throw"The template ID is required. Visit https://dashboard.emailjs.com/admin/templates"},n=e=>e.webdriver||!e.languages||0===e.languages.length,l=()=>new t(451,"Unavailable For Headless Browser"),c=(e,t)=>{if((e=>!e.list?.length||!e.watchVariable)(e))return!1;((e,t)=>{if(!Array.isArray(e))throw"The BlockList list has to be an array";if("string"!=typeof t)throw"The BlockList watchVariable has to be a string"})(e.list,e.watchVariable);const i=(r=t,o=e.watchVariable,r instanceof FormData?r.get(o):r[o]);var r,o;return"string"==typeof i&&e.list.includes(i)},d=()=>new t(403,"Forbidden"),m=async(e,t,i)=>{if(!t.throttle||!i)return!1;((e,t)=>{if("number"!=typeof e||e<0)throw"The LimitRate throttle has to be a positive number";if(t&&"string"!=typeof t)throw"The LimitRate ID has to be a non-empty string"})(t.throttle,t.id);const r=t.id||e,o=await(async(e,t,i)=>{const r=Number(await i.get(e)||0);return t-Date.now()+r})(r,t.throttle,i);return o>0||(await i.set(r,Date.now().toString()),!1)},h=()=>new t(429,"Too Many Requests"),p=async(e,t,o,p)=>{const u=r(p),b=u.publicKey||i.publicKey,g=u.blockHeadless||i.blockHeadless,f=u.storageProvider||i.storageProvider,w={...i.blockList,...u.blockList},y={...i.limitRate,...u.limitRate};if(g&&n(navigator))return Promise.reject(l());if(s(b,e,t),(e=>{if(e&&"[object Object]"!==e.toString())throw"The template params have to be the object. Visit https://www.emailjs.com/docs/sdk/send/"})(o),o&&c(w,o))return Promise.reject(d());if(await m(location.pathname,y,f))return Promise.reject(h());const v={lib_version:"4.4.1",user_id:b,service_id:e,template_id:t,template_params:o};return a("/api/v1.0/email/send",JSON.stringify(v),{"Content-type":"application/json"})},u=async(e,t,o,p)=>{const u=r(p),b=u.publicKey||i.publicKey,g=u.blockHeadless||i.blockHeadless,f=i.storageProvider||u.storageProvider,w={...i.blockList,...u.blockList},y={...i.limitRate,...u.limitRate};if(g&&n(navigator))return Promise.reject(l());const v=(e=>"string"==typeof e?document.querySelector(e):e)(o);s(b,e,t),(e=>{if(!e||"FORM"!==e.nodeName)throw"The 3rd parameter is expected to be the HTML form element or the style selector of the form"})(v);const j=new FormData(v);return c(w,j)?Promise.reject(d()):await m(location.pathname,y,f)?Promise.reject(h()):(j.append("lib_version","4.4.1"),j.append("service_id",e),j.append("template_id",t),j.append("user_id",b),a("/api/v1.0/email/send-form",j))};var b={init:o,send:p,sendForm:u,EmailJSResponseStatus:t};return e.EmailJSResponseStatus=t,e.default=b,e.init=o,e.send=p,e.sendForm=u,Object.defineProperty(e,"__esModule",{value:!0}),e}({});</script>
 <link rel="icon" type="image/png" href="data:image/png;base64,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">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -256,18 +256,6 @@ body{font-family:'Montserrat',sans-serif;background:var(--white);color:var(--dar
     body { background:white; }
     .result-hero { background:#1F2937 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   }
-
-  /* ── NEUE ERGEBNISSEITE ─────────────────────────── */
-  .detail-section { margin-bottom: 4px; }
-  .detail-eyebrow { font-size:10px; font-weight:700; letter-spacing:.12em; color:var(--mid); text-transform:uppercase; margin-bottom:6px; }
-  .detail-title { font-size:20px; font-weight:700; color:var(--dark); margin-bottom:14px; letter-spacing:-.01em; }
-  .detail-text p { font-size:14px; line-height:1.8; color:var(--dark); margin-bottom:12px; }
-  .detail-text p:last-child { margin-bottom:0; }
-  #tie-choices .option { border:1.5px solid var(--border); border-radius:8px; padding:14px 16px; cursor:pointer; transition:all .15s; background:var(--white); display:flex; align-items:center; gap:12px; margin-bottom:8px; }
-  #tie-choices .option:hover { border-color:var(--gold); background:var(--gold-bg); }
-  #tie-choices .option.selected { border-color:var(--gold); background:var(--gold-bg); }
-  #tie-choices .option.selected .option-dot { border-color:var(--gold-dark); background:var(--gold); }
-  @media(max-width:600px){ .detail-title{font-size:17px;} .detail-text p{font-size:13px;} }
 </style>
 </head>
 <body>
@@ -299,13 +287,13 @@ body{font-family:'Montserrat',sans-serif;background:var(--white);color:var(--dar
   <img id="logo-el" src="" alt="Kim Koerber" class="logo-img">
   <div class="header-right">
     <div class="header-badge">7 Minuten</div>
-    <div class="header-version">TERRA CHECK 3.0</div>
+    <div class="header-version">TERRA CHECK 3.3</div>
   </div>
 </div>
 
 <!-- INTRO -->
 <div id="intro" class="screen">
-  <div class="intro-eyebrow">TERRA Check 3.0</div>
+  <div class="intro-eyebrow">TERRA Check 3.3</div>
   <h1 class="intro-title">Wo steckt dein<br>größtes <span class="gold">Wachstumspotenzial?</span></h1>
   <p class="intro-body">24 Aussagen. 7 Minuten. Du bekommst dein persönliches 7F-Energieprofil und erfährst, welcher Unternehmer-Typ du bist.</p>
   <div class="tag-row">
@@ -397,22 +385,59 @@ body{font-family:'Montserrat',sans-serif;background:var(--white);color:var(--dar
   </div>
 
   <div class="uid-box" id="uid-box">
-    <div>
-      <div class="uid-label">Deine Unique ID</div>
-      <div class="uid-value" id="uid-display">----</div>
-    </div>
-    <button class="uid-copy" onclick="copyUID()">Kopieren</button>
+  <div>
+    <div class="uid-label">Deine Unique ID</div>
+    <div class="uid-value" id="uid-display">----</div>
   </div>
-
-  <div class="success-box" id="success-box">
-    <div class="success-title">Mail ist unterwegs.</div>
-    <div class="success-text" id="success-text"></div>
-  </div>
-
-  <!-- DYNAMISCHER INHALT -->
-  <div id="result-content"></div>
-
+  <button class="uid-copy" onclick="copyUID()">Kopieren</button>
 </div>
+
+<div class="success-box" id="success-box">
+  <div class="success-title">Mail ist unterwegs.</div>
+  <div class="success-text" id="success-text"></div>
+</div>
+
+<div class="eteam-result-badge" id="eteam-badge">
+    <div class="eteam-result-icon" id="eteam-icon"></div>
+    <div class="eteam-result-body">
+      <div class="eteam-result-label" id="eteam-label">Dein E-Team-Typ</div>
+      <div class="eteam-result-name" id="eteam-name"></div>
+      <div class="eteam-result-sub" id="eteam-sub"></div>
+    </div>
+  </div>
+
+  <div class="bars-section">
+    <div class="bars-label">Dein 7F-Energieprofil</div>
+    <div class="bars" id="bars"></div>
+  </div>
+
+  <div class="sdt-section">
+    <div class="sdt-label">Deine stärkste Dimension (SDT)</div>
+    <div class="sdt-pills" id="sdt-pills"></div>
+  </div>
+
+  <div class="insight-box">
+    <div class="insight-label">Dein kombiniertes Profil</div>
+    <div class="insight-headline" id="r-headline"></div>
+    <div class="insight-text" id="r-text"></div>
+  </div>
+
+  <div class="nextstep-box">
+    <div class="nextstep-label">Der logische nächste Schritt</div>
+    <div class="nextstep-text" id="r-nextstep"></div>
+  </div>
+
+  <div class="cta-section">
+    <button class="btn-primary" onclick="window.open('https://tidycal.com/tckimkoerber/terra-clarity-call','_blank')">
+      TERRA Clarity Call buchen · 45 Min · 150 € →
+    </button>
+    <button class="btn-secondary" onclick="window.open('https://newsletter.kimkoerber.com','_blank')">
+      Newsletter abonnieren &nbsp;→
+    </button>
+  </div>
+  <div class="cta-note">45 Minuten. 150 Euro. Kein Funnel. Kein Verkaufsdruck.<br>Du buchst direkt einen Termin mit Kim.</div>
+  <div class="divider"></div>
+  <button class="btn-secondary" onclick="restartQuiz()" style="width:100%">Check neu starten</button>
 </div>
 
 </div>
@@ -843,55 +868,22 @@ function getWinner(obj){
   return Object.entries(obj).sort(function(a,b){return b[1]-a[1];})[0][0];
 }
 
-// ── TEXTE: E-TEAM-TYP ────────────────────────────
-var ETEAM_DESCRIPTIONS = {
-  empath: "Du liest Räume, bevor du ein Wort gehört hast. Das ist keine Fähigkeit, die du dir antrainiert hast. Es ist deine Grundausstattung. Du weißt, wenn jemand nicht okay ist, auch wenn er behauptet, alles sei in Ordnung.\n\nDas kostet dich etwas. Mehr als andere ahnen. Weil du nicht einfach abschalten kannst. Weil du immer gleichzeitig auf mehreren Ebenen unterwegs bist: die eigene Aufgabe, die Stimmung im Team, das Unausgesprochene zwischen zwei Personen.\n\nAuf andere wirkst du wie ein Anker. Ruhig, verlässlich, verständnisvoll. Menschen öffnen sich dir schnell, manchmal zu schnell, weil sie spüren, dass du wirklich zuhörst. Das ist ein Geschenk. Und manchmal eine Bürde.\n\nDein blinder Fleck: Du kennst die Bedürfnisse aller, außer manchmal deinen eigenen. Du priorisierst den Frieden über deine eigene Klarheit. Die Frage, die dich weiterbringt: Was würdest du entscheiden, wenn niemand anderes davon betroffen wäre?",
-  experte: "Du denkst tiefer als die meisten. Nicht als Pose, sondern weil Oberflächlichkeit dich körperlich stört. Wenn jemand eine halbgare Lösung vorschlägt, siehst du sofort, wo sie bricht.\n\nDu investierst in dein Wissen, weil es dir Kontrolle gibt. Kontrolle über Situationen, über Qualität, über Ergebnisse. Wenn du etwas wirklich verstehst, kannst du es auch wirklich beeinflussen. Das ist keine Arroganz. Das ist dein Betriebssystem.\n\nAuf andere wirkst du wie ein Kompass. Wenn etwas unklar ist, wird nach dir gefragt. Menschen verlassen sich auf deine Einschätzung. Das gibt dir Bedeutung. Und manchmal auch Druck.\n\nDein blinder Fleck: Du verwechselst manchmal Wissen mit Entscheidung. Du analysierst weiter, wenn es Zeit wäre zu handeln. Die Frage, die dich weiterbringt: Was würdest du tun, wenn du keine Garantie hättest, dass es richtig ist?",
-  enthusiast: "Du bringst etwas mit, das sich nicht simulieren lässt: echte Begeisterung. Wenn du für eine Idee brennst, verändert sich der Raum. Menschen, die vorher zögerten, fangen an zu glauben.\n\nDu denkst in Möglichkeiten, nicht in Grenzen. Wo andere ein Problem sehen, siehst du einen Weg. Das macht dich wertvoll in Momenten, wo andere stagnieren. Du ziehst an, du inspirierst, du zündest.\n\nAuf andere wirkst du wie ein Katalysator. Deine Präsenz verändert, was möglich scheint. Menschen kommen in deiner Nähe auf Ideen, die sie alleine nicht gehabt hätten.\n\nDein blinder Fleck: Die Energie, die du erzeugst, braucht Boden. Du fängst manches an, was andere zu Ende bringen müssen. Die Frage, die dich weiterbringt: Was willst du noch wollen, wenn die Aufregung weg ist?",
-  ernahrer: "Du bist derjenige, der dafür sorgt, dass alles steht. Nicht weil dich jemand darum gebeten hat, sondern weil du es nicht aushältst, wenn etwas wackelt. Du siehst Lücken früh. Du schließt sie, bevor andere sie bemerken.\n\nDein Antrieb ist Stabilität. Für dich, für dein Team, für deine Familie. Das ist kein Mangel an Visionen. Es ist eine tiefe Form von Verantwortung.\n\nAuf andere wirkst du wie ein Fundament. Man weiß, dass du da bist. Man baut auf dich. Manchmal mehr als du weißt, und manchmal mehr als gesund ist. Deine Verlässlichkeit wird oft als selbstverständlich genommen.\n\nDein blinder Fleck: Du gibst Sicherheit nach außen, bevor du sie für dich selbst hast. Du trägst, bis es zu viel wird. Die Frage, die dich weiterbringt: Was würdest du aufbauen, wenn du nur für dich bauen müsstest?"
-};
-
-// ── TEXTE: FOKUS-F ───────────────────────────────
-var FOKUS_DESCRIPTIONS = {
-  Firma: "Firma ist nicht nur dein Job. Es ist der Ort, an dem du einen großen Teil deiner wachen Zeit verbringst, Entscheidungen trägst und dich selbst als fähig oder unfähig erlebst. Wenn dieser Bereich nicht stimmt, strahlt das aus.\n\nDass Firma gerade dein Fokus-F ist, heißt nicht, dass dein Unternehmen schlecht läuft. Es heißt, dass etwas dort deine Aufmerksamkeit bindet. Vielleicht eine Spannung, die du noch nicht benennen konntest.\n\nDie meisten Geschäftsführer, die hier landen, beschreiben dasselbe: Das Unternehmen läuft. Aber sie selbst laufen nicht mehr richtig mit. Die Frage ist nicht, ob dein Unternehmen erfolgreich ist. Die Frage ist, ob du dich darin noch erkennst.",
-  Freude: "Freude ist das am schwersten zu rechtfertigende Bedürfnis. Gerade für Menschen, die Verantwortung tragen. Du weißt, dass du funktionierst. Du weißt auch, dass du das schon länger ohne echten Antrieb tust.\n\nFreude ist kein Luxus. Sie ist ein Signal. Wenn sie fehlt, arbeitet dein System auf Reserve.\n\nDass Freude dein Fokus-F ist, heißt: Irgendwo zwischen dem, was du tust, und dem, was dich wirklich antreibt, ist eine Lücke entstanden. Diese Lücke hat keinen Notfall-Charakter. Sie ist leise. Und genau deshalb wird sie so lange ignoriert, bis sie laut wird.",
-  Familie: "Familie ist für die meisten Menschen der Bereich, der zuerst kommt, wenn man fragt, was wirklich zählt. Und gleichzeitig der Bereich, der im Alltag am häufigsten hinten ansteht.\n\nDass Familie dein Fokus-F ist, heißt nicht, dass du ein schlechter Vater, Partner oder Sohn bist. Es heißt, dass du spürst: Hier stimmt gerade etwas nicht.\n\nFamilie als Fokus bedeutet: Dieser Bereich will gesehen werden. Nicht mit schlechtem Gewissen. Sondern mit Entscheidung.",
-  Freunde: "Freundschaften sind das erste, was wegfällt, wenn das Leben voller wird. Kein Drama, kein Bruch. Einfach immer weniger Zeit, immer weniger Energie, immer weniger Kontakt.\n\nDass Freunde dein Fokus-F sind, heißt: Du vermisst etwas. Verbindung außerhalb von Verantwortung. Menschen, bei denen du einfach du sein kannst.\n\nDieser Bereich wird selten als dringend empfunden. Genau deshalb schrumpft er so unbemerkt. Und genau deshalb lohnt es sich, ihn jetzt anzuschauen.",
-  Fitness: "Dein Körper redet mit dir. Schon länger. Vielleicht nicht durch Schmerzen, vielleicht durch Müdigkeit, durch fehlenden Antrieb, durch das Gefühl, nicht mehr richtig auf Betriebstemperatur zu kommen.\n\nFitness als Fokus-F heißt nicht, dass du abnehmen oder einen Marathon laufen sollst. Es heißt, dass Körper und Geist gerade nicht im Einklang sind.\n\nDie Forschung ist eindeutig: Körperliche Aktivität ist der stärkste Hebel für mentale Energie, Belastbarkeit und Fokus. Du weißt das wahrscheinlich. Die Frage ist nicht das Wissen. Die Frage ist, warum du es trotzdem nicht tust.",
-  Finanzen: "Geld ist das Thema, über das die wenigsten offen reden. Auch wenn es fast jeden beschäftigt. Für Unternehmer kommt noch eine Schicht dazu: Dein persönliches Finanzbild und das deines Unternehmens sind oft schwer zu trennen.\n\nDass Finanzen dein Fokus-F sind, heißt nicht zwingend, dass zu wenig da ist. Es kann auch heißen: Du weißt nicht genau, was da ist. Oder du willst nicht hinschauen.\n\nFinanzielle Klarheit ist kein Buchhaltungsthema. Sie ist ein Freiheitsthema. Solange dieser Bereich unklar ist, kostet er dich Energie, auch wenn du gerade nicht aktiv darüber nachdenkst.",
-  Fundament: "Fundament ist das, was bleibt, wenn man alles andere wegnimmt. Deine Werte. Dein Warum. Das Gefühl, dass das, was du tust, zu dem passt, wer du bist.\n\nDass Fundament dein Fokus-F ist, ist kein Zeichen von Krise. Es ist ein Zeichen von Tiefe. Du stehst an einem Punkt, wo die äußeren Dinge nicht mehr ausreichen, um dich zu tragen.\n\nDieser Bereich ist der schwierigste. Weil er keine schnelle Lösung kennt. Weil niemand dir sagen kann, was dein Fundament ist. Aber wer hier anfängt zu graben, findet meistens das, was ihm schon länger gefehlt hat."
-};
-
-// ── TEXTE: SDT-DIMENSIONEN ───────────────────────
-var SDT_DESCRIPTIONS = {
-  auto: "Autonomie ist das Bedürfnis, das am seltensten laut wird, aber am lautesten stört, wenn es fehlt. Es geht nicht darum, niemandem Rechenschaft zu schulden. Es geht darum, dass das, was du tust, sich nach dir anfühlt.\n\nAuf andere wirkst du unabhängiger als du dich fühlst. Du kommunizierst Selbstsicherheit. Aber innerlich gibt es Bereiche, in denen du funktionierst statt wählst.\n\nAutonomie zu stärken heißt nicht, alles aufzukündigen. Es heißt, wieder spüren zu lernen: Was will ich hier eigentlich? Und dann so zu handeln. In kleinen Schritten. In einem Bereich zuerst.",
-  zug: "Zugehörigkeit ist kein weiches Thema. Es ist ein biologisches Grundbedürfnis. Menschen, die sich wirklich zugehörig fühlen, sind belastbarer, kreativer und leistungsfähiger.\n\nDass Zugehörigkeit deine stärkste Dimension ist, heißt: Du bist umgeben von Menschen, aber du fühlst dich nicht immer wirklich gesehen. Oder echte Verbindung kostet gerade mehr Energie, als du hast.\n\nZugehörigkeit entsteht nicht durch mehr Zeit mit anderen. Sie entsteht durch echte Momente. Durch das Gefühl: Dieser Mensch sieht mich. Nicht nur was ich leiste.",
-  wirk: "Wirksamkeit ist das Bedürfnis zu spüren, dass das, was du tust, etwas verändert. Nicht im Großen, nicht im Abstrakten. Sondern konkret: Mein Handeln hat Konsequenz.\n\nDass Wirksamkeit deine stärkste Dimension ist, heißt oft: Du tust viel. Aber du spürst nicht, dass es ankommt. Die Arbeit verschwindet in Prozessen. Das Feedback bleibt aus.\n\nWirksamkeit ist kein Ego-Bedürfnis. Es ist das, was Arbeit von Fließbandarbeit unterscheidet. Wenn du spürst, dass du eine Rolle spielst, die jeder andere auch spielen könnte, verlierst du Motivation. Nicht weil du schwach bist. Sondern weil dein Gehirn Sinn braucht, um Energie freizugeben."
-};
-
-var SDT_LABELS = { auto: "Autonomie", zug: "Zugehörigkeit", wirk: "Wirksamkeit" };
-
 // ── RESULT ────────────────────────────────────────
 function showResult(){
   var scores=computeScores();
-
-  // Gleichstand-Erkennung für Fokus-F
-  var fSorted = Object.entries(scores.F).sort(function(a,b){return b[1]-a[1];});
-  var topFScore = fSorted[0][1];
-  var tieFs = fSorted.filter(function(e){return e[1]===topFScore;}).map(function(e){return e[0];});
-  var winF = tieFs[0];
-
+  var winF=getWinner(scores.F);
   var winE=getWinner(scores.E);
   var winS=getWinner(scores.S);
   var profileKey=winF+'-'+winE;
   var profile=profiles[profileKey]||{headline:'Dein Profil: '+winE+' mit Fokus '+winF,text:'Ein klares Muster zeigt sich.',nextstep:'Besprich dein Ergebnis in einem TERRA Clarity Call.'};
   var edef=eteamDefs[winE];
 
+  // Generate UID
   currentUID = generateUID();
 
+  // Build result data object for email + render
   resultDataGlobal = {
     winF:winF, winE:winE, winS:winS,
-    tieFs: tieFs.length > 1 ? tieFs : null,
     eteamName:edef.name, eteamSub:edef.sub, eteamIcon:edef.icon,
     eteamColor:edef.color, eteamBg:edef.bg, eteamBorder:edef.border,
     eteamKern:edef.kern,
@@ -901,173 +893,87 @@ function showResult(){
     scores:scores
   };
 
-  notifyKim(resultDataGlobal, scores);
-  submitToNetlify('', resultDataGlobal, scores);
-  showEmailGate(resultDataGlobal);
-}
+  // HTML-Archiv speichern, dann Mails versenden
+  saveResultToBlob(resultDataGlobal, scores, function(blobUrl){
+    resultDataGlobal.blobUrl = blobUrl || null;
+    notifyKim(resultDataGlobal, scores);
+    submitToNetlify('', resultDataGlobal, scores);
+  });
 
-function formatDetailText(text){
-  return text.split('\n\n').map(function(p){
-    return '<p>'+p.replace(/\n/g,'<br>')+'</p>';
-  }).join('');
+  // Email Gate sofort zeigen (parallel zum Blob-Speichern)
+  showEmailGate(resultDataGlobal);
 }
 
 function renderResult(data){
   document.getElementById('email-gate').style.display='none';
   var r=document.getElementById('result');
-  r.style.display='flex'; r.style.flexDirection='column';
+  r.style.display='flex';r.style.flexDirection='column';
 
   var winF=data.winF; var winE=data.winE; var winS=data.winS;
   var edef=eteamDefs[winE];
   var profile=profiles[winF+'-'+winE]||{headline:'Profil: '+edef.name+' mit Fokus '+winF,text:'',nextstep:''};
   var scores=data.scores;
 
+  // UID
   document.getElementById('uid-display').textContent=currentUID;
-  document.getElementById('r-title').textContent=edef.name+' · Fokus '+winF;
-  document.getElementById('r-sub').textContent='Unique ID: '+currentUID;
 
-  // ── BARS (für result-content)
+  document.getElementById('r-title').textContent=edef.name+' · Fokus '+winF;
+  document.getElementById('r-sub').textContent='Dein E-Team-Typ und dein stärkstes Wachstumsfeld auf einen Blick.';
+
+  // E-Team Badge
+  var badge=document.getElementById('eteam-badge');
+  badge.style.background=edef.bg;badge.style.borderColor=edef.border;
+  document.getElementById('eteam-icon').textContent=edef.icon;
+  document.getElementById('eteam-icon').style.background=edef.bg;
+  document.getElementById('eteam-label').style.color=edef.color;
+  document.getElementById('eteam-name').textContent=edef.name;
+  document.getElementById('eteam-name').style.color=edef.color;
+  document.getElementById('eteam-sub').textContent=edef.sub;
+  document.getElementById('eteam-sub').style.color=edef.color;
+
+  // 7F Bars
   var ftotal=Object.values(scores.F).reduce(function(a,b){return a+b;},0)||1;
-  var barsHTML='';
+  var barsEl=document.getElementById('bars');
+  barsEl.innerHTML='';
   Object.entries(scores.F).sort(function(a,b){return b[1]-a[1];}).forEach(function(entry){
     var f=entry[0],v=entry[1];
     var pct=Math.round((v/ftotal)*100);
     var isWin=f===winF;
-    barsHTML+='<div class="bar-row'+(isWin?' bar-winner':'')+'">'
-      +'<div class="bar-label">'+(isWin?'<span class="winner-dot"></span>':'')+f+'</div>'
+    var row=document.createElement('div');
+    row.className='bar-row'+(isWin?' bar-winner':'');
+    row.innerHTML='<div class="bar-label">'+(isWin?'<span class="winner-dot"></span>':'')+f+'</div>'
       +'<div class="bar-track"><div class="bar-fill" style="background:'+(fColors[f]||'#888')+'" data-pct="'+pct+'"></div></div>'
-      +'<div class="bar-pct">'+pct+' %</div></div>';
+      +'<div class="bar-pct">'+pct+' %</div>';
+    barsEl.appendChild(row);
   });
-
-  // ── SDT PILLS
-  var stotal=Object.values(scores.S).reduce(function(a,b){return a+b;},0)||1;
-  var pillsHTML='';
-  Object.entries(scores.S).sort(function(a,b){return b[1]-a[1];}).forEach(function(entry,i){
-    var k=entry[0],v=entry[1];
-    var pct=Math.round((v/stotal)*100);
-    pillsHTML+='<div class="sdt-pill'+(i===0?' dominant':'')+'">'
-      +'<div class="sdt-pill-name">'+sdtLabels[k]+'</div>'
-      +'<div class="sdt-pill-bar"><div class="sdt-pill-fill" data-pct="'+pct+'"></div></div>'
-      +'<div class="sdt-pill-pct">'+pct+' %</div></div>';
-  });
-
-  // ── FOKUS-F SEKTION (mit Gleichstand-Logik)
-  var fokusHTML='';
-  if(data.tieFs && data.tieFs.length > 1){
-    fokusHTML='<div class="detail-eyebrow">Dein Fokus-F</div>'
-      +'<div class="detail-title" style="margin-bottom:8px;">Gleichstand erkannt</div>'
-      +'<p style="font-size:13px;color:var(--mid);line-height:1.7;margin-bottom:16px;">Beide Bereiche haben bei dir dieselbe Energie. Welcher beschäftigt dich gerade mehr?</p>'
-      +'<div id="tie-choices">'
-      +data.tieFs.map(function(f){
-        return '<button class="option" onclick="resolveTie(\''+f+'\', this)">'
-          +'<div class="option-dot"></div>'
-          +'<div class="option-text" style="font-weight:600;">'+f+'</div>'
-          +'</button>';
-      }).join('')
-      +'</div>'
-      +'<div id="fokus-detail" style="margin-top:20px;display:none;"></div>';
-  } else {
-    fokusHTML='<div class="detail-eyebrow">Dein Fokus-F</div>'
-      +'<div class="detail-title">'+winF+'</div>'
-      +'<div class="detail-text">'+formatDetailText(FOKUS_DESCRIPTIONS[winF]||'')+'</div>';
-  }
-
-  // ── SDT DETAIL
-  var sdtLabel = SDT_LABELS[winS] || winS;
-  var sdtDetailHTML='<div class="detail-eyebrow">Deine SDT-Dimension</div>'
-    +'<div class="detail-title">'+sdtLabel+'</div>'
-    +'<div class="detail-text">'+formatDetailText(SDT_DESCRIPTIONS[winS]||'')+'</div>';
-
-  // ── ALLES ZUSAMMENBAUEN
-  document.getElementById('result-content').innerHTML=''
-
-    // 1. Kombiniertes Profil (TL:DR)
-    +'<div class="insight-box" style="margin-bottom:16px;">'
-    +'<div class="insight-label">Dein kombiniertes Profil</div>'
-    +'<div class="insight-headline">'+profile.headline+'</div>'
-    +'<div class="insight-text">'+profile.text+'</div>'
-    +'</div>'
-
-    // 2. Next Step
-    +'<div class="nextstep-box">'
-    +'<div class="nextstep-label">Der logische nächste Schritt</div>'
-    +'<div class="nextstep-text">'+profile.nextstep+'</div>'
-    +'</div>'
-
-    // 3. 7F Bars
-    +'<div class="bars-section">'
-    +'<div class="bars-label">Dein 7F-Energieprofil</div>'
-    +'<div class="bars" id="bars">'+barsHTML+'</div>'
-    +'</div>'
-
-    // 4. SDT Pills
-    +'<div class="sdt-section">'
-    +'<div class="sdt-label">Deine stärkste Dimension (SDT)</div>'
-    +'<div class="sdt-pills" id="sdt-pills">'+pillsHTML+'</div>'
-    +'</div>'
-
-    +'<div class="divider"></div>'
-
-    // 5. E-Team-Typ Detail
-    +'<div class="detail-section">'
-    +'<div class="detail-eyebrow">Dein E-Team-Typ</div>'
-    +'<div class="eteam-result-badge" style="border-color:'+edef.border+';background:'+edef.bg+';margin-bottom:12px;">'
-    +'<div class="eteam-result-icon" style="background:'+edef.bg+'">'+edef.icon+'</div>'
-    +'<div class="eteam-result-body">'
-    +'<div class="eteam-result-label" style="color:'+edef.color+'">E-TEAM-TYP</div>'
-    +'<div class="eteam-result-name" style="color:'+edef.color+'">'+edef.name+'</div>'
-    +'<div class="eteam-result-sub" style="color:'+edef.color+'">'+edef.sub+'</div>'
-    +'</div></div>'
-    +'<div class="detail-text">'+formatDetailText(ETEAM_DESCRIPTIONS[winE]||'')+'</div>'
-    +'</div>'
-
-    +'<div class="divider"></div>'
-
-    // 6. Fokus-F Detail
-    +'<div class="detail-section" id="fokus-section">'+fokusHTML+'</div>'
-
-    +'<div class="divider"></div>'
-
-    // 7. SDT Detail
-    +'<div class="detail-section">'+sdtDetailHTML+'</div>'
-
-    +'<div class="divider"></div>'
-
-    // 8. CTA
-    +'<div class="cta-section">'
-    +'<button class="btn-primary" onclick="window.open(\'https://tidycal.com/tckimkoerber/terra-clarity-call\',\'_blank\')">TERRA Clarity Call buchen · 45 Min · 150 € →</button>'
-    +'<button class="btn-secondary" onclick="window.open(\'https://newsletter.kimkoerber.com\',\'_blank\')">Newsletter abonnieren →</button>'
-    +'</div>'
-    +'<div class="cta-note">45 Minuten. 150 Euro. Kein Funnel. Kein Verkaufsdruck.<br>Du buchst direkt einen Termin mit Kim.</div>'
-    +'<div class="divider"></div>'
-    +'<button class="btn-secondary" onclick="restartQuiz()" style="width:100%">Check neu starten</button>';
-
-  // Bars + Pills animieren
   setTimeout(function(){
     document.querySelectorAll('.bar-fill').forEach(function(el){el.style.width=el.dataset.pct+'%';});
   },120);
+
+  // SDT pills
+  var stotal=Object.values(scores.S).reduce(function(a,b){return a+b;},0)||1;
+  var pillsEl=document.getElementById('sdt-pills');
+  pillsEl.innerHTML='';
+  Object.entries(scores.S).sort(function(a,b){return b[1]-a[1];}).forEach(function(entry,i){
+    var k=entry[0],v=entry[1];
+    var pct=Math.round((v/stotal)*100);
+    var pill=document.createElement('div');
+    pill.className='sdt-pill'+(i===0?' dominant':'');
+    pill.innerHTML='<div class="sdt-pill-name">'+sdtLabels[k]+'</div>'
+      +'<div class="sdt-pill-bar"><div class="sdt-pill-fill" data-pct="'+pct+'"></div></div>'
+      +'<div class="sdt-pill-pct">'+pct+' %</div>';
+    pillsEl.appendChild(pill);
+  });
   setTimeout(function(){
     document.querySelectorAll('.sdt-pill-fill').forEach(function(el){el.style.width=el.dataset.pct+'%';});
   },200);
 
-  window.scrollTo(0,0);
-}
+  // Insight + Next Step
+  document.getElementById('r-headline').textContent=profile.headline;
+  document.getElementById('r-text').textContent=profile.text+' '+edef.kern;
+  document.getElementById('r-nextstep').textContent=profile.nextstep;
 
-// ── GLEICHSTAND AUFLÖSEN ─────────────────────────
-function resolveTie(chosen, btn){
-  document.querySelectorAll('#tie-choices .option').forEach(function(b){
-    b.classList.remove('selected');
-    b.style.pointerEvents='none';
-    b.style.opacity='0.5';
-  });
-  btn.classList.add('selected');
-  btn.style.opacity='1';
-  var detail=document.getElementById('fokus-detail');
-  if(detail){
-    detail.style.display='block';
-    detail.innerHTML='<div class="detail-text">'+formatDetailText(FOKUS_DESCRIPTIONS[chosen]||'')+'</div>';
-    detail.scrollIntoView({behavior:'smooth',block:'nearest'});
-  }
+  window.scrollTo(0,0);
 }
 
 // ── UNIQUE ID ────────────────────────────────────
@@ -1196,7 +1102,7 @@ function buildEmailHTML(data){
     + '</div>'
     + '<div style="text-align:center;margin-top:20px;">'
     + '<a href="https://tidycal.com/tckimkoerber/terra-clarity-call" style="display:inline-block;background:#4F69B0;color:#fff;font-size:15px;font-weight:700;padding:14px 28px;border-radius:6px;text-decoration:none;">TERRA Clarity Call buchen · 45 Min · 150 €</a>'
-    + '<p style="font-size:11px;color:#6B7280;margin-top:10px;">kimkoerber.com · TERRA Check 3.0</p>'
+    + '<p style="font-size:11px;color:#6B7280;margin-top:10px;">kimkoerber.com · TERRA Check 3.3</p>'
     + '</div>'
     + '</div>';
 }
@@ -1222,6 +1128,32 @@ function submitToNetlify(email, data, scores){
 }
 
 // ── BENACHRICHTIGUNG AN KIM (immer, ohne personenbezogene Daten) ──
+function saveResultToBlob(data, scores, callback){
+  var fScores = scores.F || {};
+  var sScores = scores.S || {};
+  var payload = {
+    uid:       currentUID,
+    eteam:     data.eteamName,
+    fokusF:    data.winF,
+    sdt:       data.winS,
+    headline:  data.headline,
+    nextstep:  data.nextstep,
+    scores:    { F: fScores, S: sScores },
+    timestamp: new Date().toLocaleString("de-DE")
+  };
+  fetch("/.netlify/functions/save-result", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(res){
+    if(res.success) callback(res.url);
+    else callback(null);
+  })
+  .catch(function(){ callback(null); });
+}
+
 function notifyKim(data, scores){
   if(EMAILJS_PUBLIC_KEY === 'DEIN_EMAILJS_PUBLIC_KEY') return;
   var fScores = scores.F || {};
@@ -1241,6 +1173,7 @@ function notifyKim(data, scores){
     sdt:        data.winS,
     headline:   data.headline,
     scores:     scoreText,
+    result_url: data.blobUrl || 'Noch nicht verfügbar',
     timestamp:  new Date().toLocaleString('de-DE')
   });
 }

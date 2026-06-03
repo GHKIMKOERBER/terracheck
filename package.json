@@ -1,0 +1,8 @@
+{
+  "name": "terracheck",
+  "version": "3.3.0",
+  "description": "TERRA Check by Kim Koerber",
+  "dependencies": {
+    "@netlify/blobs": "^7.0.0"
+  }
+}
