@@ -772,6 +772,7 @@ function prevBlock(){
 function computeScores(){
   var F={Firma:0,Freude:0,Familie:0,Freunde:0,Fitness:0,Finanzen:0,Fundament:0};
   var S={auto:0,wirk:0,zug:0};
+  var Scount={auto:0,wirk:0,zug:0}; // zaehlt Items je Dimension
   var E={empath:0,experte:0,enthusiast:0,ernahrer:0};
 
   // Likert: niedrige Werte = hohes Wachstumspotenzial (invertiert)
@@ -781,8 +782,14 @@ function computeScores(){
       var val=likertAnswers[item.id]||3;
       var inverted=6-val; // 1->5, 5->1
       F[b.f]=(F[b.f]||0)+inverted;
-      S[item.sdt]=(S[item.sdt]||0)+(6-val);
+      S[item.sdt]=(S[item.sdt]||0)+inverted;
+      Scount[item.sdt]=(Scount[item.sdt]||0)+1;
     });
+  });
+
+  // SDT als Mittelwert je Dimension, damit ungleiche Fragenzahl nicht verzerrt
+  Object.keys(S).forEach(function(k){
+    if(Scount[k]>0) S[k]=S[k]/Scount[k];
   });
 
   // E-Team: count votes
